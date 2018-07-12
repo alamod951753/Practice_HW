@@ -14,15 +14,14 @@ git 熟悉
 
 延伸：
 1. main.py 裡 #benchmark 1. 與 #benchmark 2. 執行時間的差異是因為？
-> 1st benchmark 是一個生成函數 generator，並無實際執行內部函數
-2nd benchmark 因為有 list 會產生陣列數字，故執行次數較多
+> 1st benchmark 是一個生成函數 generator，並無實際執行內部函數；2nd benchmark 因為有 list 會產生陣列數字，故執行次數較多
 
 config 管理
 ---
 
 參考 內容
 1. 想請問這樣的 config 會如何進 git 與管理，config 的內容也要進 git 嗎？
-> 使用 configparser，建制不同環境對應的 section及參數值，再進到 git 管理
+> 使用 configparser，建制不同環境對應的 section 及參數值，再進到 git 管理
 
 python flask
 ---
@@ -42,4 +41,15 @@ python sqlalchemy
 
 參考 benchmark
 1. 如果是 insert or update 的情形的話，benchmark script 該如何修改？ (部分 testcase 可能會直接無法用，可移除)
-> 
+> sqlite 在面對 insert or update，可以使用 merge 完成，程式修改如下
+```python
+def test_sqlalchemy_orm_insert_update(strName):
+    init_sqlalchemy()
+    t0 = time.time()
+    customer = Customer()
+    customer.name = strName
+    DBSession.merge(customer)
+    print(
+        "SQLAlchemy ORM insert_update(): Total time for " + str(strName) + " "
+        + str(time.time() - t0) + " secs")
+```
